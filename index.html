@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inbox - Mock</title>
+  <style>
+    :root{
+      --accent:#a81b4f; /* magenta-ish */
+      --muted:#9b9b9b;
+      --bg:#f7f5f7;
+      --card:#ffffff;
+      --positive:#0aa96b;
+      --negative:#d62828;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Helvetica Neue', Arial;
+    }
+    html,body{height:100%;margin:0;background:var(--bg)}
+    /* viewport wrapper to mimic a phone screen */
+    .viewport{
+      width:100%;
+      max-width:412px; /* typical mobile width */
+      height:844px; /* typical mobile height */
+      margin:16px auto;
+      box-shadow:0 8px 30px rgba(0,0,0,0.08);
+      background:linear-gradient(#fff 0%, #fff 100%);
+      display:flex;flex-direction:column;overflow:hidden;
+      /* no rounded corners: keep rectangular */
+      border-radius:0;
+    }
+    /* top bar */
+    .top{
+      background:var(--accent);color:white;padding:14px 16px;display:flex;align-items:center;justify-content:center;position:relative
+    }
+    .top h1{margin:0;font-size:20px;font-weight:600;opacity:0.95}
+    .top .icon{position:absolute;right:14px;top:12px;opacity:0.95}
+
+    /* tabs */
+    .tabs{display:flex;padding:12px 16px;background:transparent;gap:12px}
+    .tab{padding:10px 8px;color:var(--muted);font-weight:600}
+    .tab.active{color:var(--accent);border-bottom:3px solid var(--accent)}
+
+    .content{padding:12px 14px;flex:1;overflow:auto}
+
+    .search-row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+    .search{flex:1;background:#fff;border:1px solid #eee;padding:12px;border-radius:6px;display:flex;align-items:center;gap:8px}
+    .filter{background:#fff;border:1px solid #eee;padding:10px;border-radius:8px}
+
+    .section-title{color:#666;font-size:13px;margin:8px 0}
+
+    /* transaction list */
+    .list{display:flex;flex-direction:column;gap:12px}
+    .tx{background:var(--card);padding:12px;border:1px solid #f0e9ef;display:flex;gap:12px;align-items:center}
+    .avatar{width:46px;height:46px;border-radius:50%;background:#ddd;flex-shrink:0}
+    .tx-body{flex:1}
+    .tx-title{font-weight:700}
+    .tx-sub{color:#888;font-size:13px}
+    .tx-amount{font-weight:700}
+    .tx-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+    .amount-pos{color:var(--positive)}
+    .amount-neg{color:var(--negative)}
+
+    /* bottom card (modal like) */
+    .bottom-card{
+      position:fixed;left:0;right:0;bottom:0;max-width:412px;margin:0 auto;background:var(--card);
+      border-top:1px solid #eee;padding:18px 14px;box-shadow:0 -8px 24px rgba(0,0,0,0.06);
+      display:block;
+      /* keep rectangular edges */
+      border-top-left-radius:0;border-top-right-radius:0;
+    }
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;align-items:center}
+    .label{color:#888;font-size:13px}
+    .value{font-weight:700}
+    .share-row{margin-top:16px}
+    .share-btn{width:100%;padding:12px;border:2px solid var(--accent);background:transparent;color:var(--accent);border-radius:6px;font-weight:700}
+
+    /* small copy icon style */
+    .copy{display:inline-block;margin-left:8px;cursor:pointer;padding:4px;border:1px solid #eee}
+
+    /* ensure the fixed card doesn't overlap list badly on small screens */
+    .content{padding-bottom:140px}
+
+    /* responsive */
+    @media (max-width:420px){.viewport{margin:0}}
+  </style>
+</head>
+<body>
+  <div class="viewport" role="application">
+    <div class="top">
+      <h1>Inbox</h1>
+      <div class="icon">✈️</div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active">Transactions</div>
+      <div class="tab">Notifications</div>
+    </div>
+
+    <div class="content">
+      <div class="search-row">
+        <div class="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35" stroke="#bbb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#bbb" stroke-width="2"/></svg>
+          <input placeholder="Search by TrxID or number" style="border:0;outline:0;flex:1;font-size:14px" />
+        </div>
+        <div class="filter">Filter</div>
+      </div>
+
+      <div class="section-title">Transactions from the last 90 days</div>
+
+      <div class="list">
+        <div class="tx">
+          <div class="avatar" style="background-image:url('https://i.pravatar.cc/60?img=12');background-size:cover"></div>
+          <div class="tx-body">
+            <div class="tx-title">Send Money</div>
+            <div class="tx-sub">Imran Miya<br>TrxID : CJR4MQV19A</div>
+          </div>
+          <div class="tx-right">
+            <div class="tx-amount amount-neg">- ৳600.00</div>
+            <div class="tx-sub" style="font-size:12px;color:#999">06:00pm 27/10/25</div>
+          </div>
+        </div>
+
+        <div class="tx">
+          <div class="avatar" style="background:#cfcfcf;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff">B</div>
+          <div class="tx-body">
+            <div class="tx-title">Received Money</div>
+            <div class="tx-sub">Boro Mama</div>
+          </div>
+          <div class="tx-right">
+            <div class="tx-amount amount-pos">+ ৳3,060.00</div>
+            <div class="tx-sub" style="font-size:12px;color:#999">12:01pm 27/10/25</div>
+          </div>
+        </div>
+
+        <!-- more items to create scroll space -->
+        <div style="height:180px"></div>
+      </div>
+    </div>
+
+    <!-- bottom details card (looks like the screenshot) -->
+    <div class="bottom-card" role="dialog" aria-label="Card to bKash">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-weight:700">Card to bKash</div>
+        <div style="color:var(--accent);font-weight:700;cursor:pointer">Close</div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <div class="label">Account</div>
+          <div class="value">VISA</div>
+        </div>
+        <div>
+          <div class="label">Time</div>
+          <div class="value">03:06pm 04/12/25</div>
+        </div>
+
+        <div>
+          <div class="label">Amount</div>
+          <div class="value">৳5000.00</div>
+        </div>
+        <div>
+          <div class="label">Charge</div>
+          <div class="value">৳0.00</div>
+        </div>
+
+        <div>
+          <div class="label">Transaction ID</div>
+          <div class="value">CJQ6LJSG84 <span class="copy" title="Copy">📋</span></div>
+        </div>
+        <div>
+          <div class="label">Reference</div>
+          <div class="value"></div>
+        </div>
+      </div>
+
+      <div class="share-row">
+        <button class="share-btn">Share</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // small JS to copy transaction id
+    document.querySelectorAll('.copy').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const txt = el.parentElement.textContent.trim().split(' ')[0];
+        navigator.clipboard?.writeText(txt).then(()=>{
+          el.textContent='✅';
+          setTimeout(()=>el.textContent='📋',1200);
+        }).catch(()=>{el.textContent='✖';setTimeout(()=>el.textContent='📋',1200)})
+      })
+    })
+  </script>
+</body>
+</html>
